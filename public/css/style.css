@@ -1,0 +1,98 @@
+div span:first-child {
+    padding: 2px;
+}
+
+#era {
+    background-color: #7c8ea3;
+    width: 100%;
+    text-align: center;
+    font-size: 160%;
+}
+
+.player {
+    width: 45%;
+    float: left;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    margin-bottom: 2%;
+}
+
+.playername {
+    width: 100%;
+    background-color: #969896;
+    text-align: center;
+    font-size: 110%;
+}
+
+.resourceBlock {
+    width: 50%;
+    background-color: #D3D3D3;
+    text-align: left;
+    float: left;
+
+}
+
+.productionBlock {
+    width: 50%;
+    background-color: #D3D3D3;
+    text-align: left;
+    float: left;
+}
+
+.resourceTop {
+    width: 100%;
+    background-color: #aaaaaa;
+    text-align: center;
+}
+
+.productionTop {
+    width: 100%;
+    background-color: #aaaaaa;
+    text-align: center;
+}
+
+.rpName {
+    width: 50%;
+    float: left;
+    text-align: right;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+
+.rpAmount {
+    margin-left: 2%;
+    width: 48%;
+    float: left;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+
+#eraNumber {
+    background-color: #7c8ea3;
+    float: left;
+    text-align: left;
+    font-size: 160%;
+}
+
+.messageBlock {
+    border-width: 1px; border-style: solid;
+    width: 44.8%;
+    overflow: scroll;
+    height: 200px;
+    float: left;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    margin-bottom: 2%;
+}
+
+.message {
+    width: 100%;
+    margin-top: 1px;
+    float: left;
+}
+
+#prototype {
+    width: 100%;
+    background-color: whitesmoke;
+    float: left;
+}

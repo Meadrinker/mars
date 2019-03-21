@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+    <div>
+        {{ form_label(form.numberPlayers) }}
+        {{ form_widget(form.numberPlayers) }}
+        {{ form_errors(form.numberPlayers) }}
+    </div>
+
+    <div id="players">
+
+        {#<div>#}
+            {#<label for="new_game_name1" class="required">Nazwa gracza 1:</label>#}
+            {#<input type="text" id="new_game_name1" name="new_game[name1]" required="required" />#}
+
+        {#</div>#}
+
+        {% if form.children['numberPlayers'].vars['value'] is defined %}
+            {% set numberPlayers = form.children['numberPlayers'].vars['value'] %}
+            {% for i in range(1, numberPlayers) %}
+                {% if form.children['name' ~ i] is defined %}
+                    <div>
+                        {{ form_label(attribute(form, "name" ~ i)) }}
+                        {{ form_widget(attribute(form, "name" ~ i)) }}
+                        {{ form_errors(attribute(form, "name" ~ i)) }}
+                    </div>
+                {% endif %}
+
+            {%  endfor %}
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form_label(form.save) }}
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block java %}
+    <script>
+        $('#new_game_numberPlayers').on('change', function() {
+            $("#players").empty();
+            var value = $(this).val();
+            for (var i = 1; i <= value; i++) {
+                var name = "<div>"+"<label for='new_game_name" + i + "' class='required'>Nazwa gracza" + i + ":</label>"+
+                    "<input type='text' id='new_game_name" + i + "' name='new_game[name" + i + "]' required='required' />"+
+                    "</div>";
+                $("#players").append(name);
+            }
+
+
+        });
+    </script>
+{% endblock %}

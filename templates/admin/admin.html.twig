@@ -1,0 +1,167 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    {% for g in game %}
+        <div id="era">
+            <a href="/game/era">Era: {{ g.era }}</a>
+        </div>
+    {% endfor %}
+
+    <div id="tabs">
+        <ul>
+            {% for user in users %}
+                <li><a href="#tabs-{{ user.resource.player.id }}">{{ user.resource.player.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% for user in users %}
+            <div id="tabs-{{ user.resource.player.id }}">
+
+                <div>
+                    <span class="resource" style="background-color: #ffcc00">Posiadane megakredyty:</span>
+                    <span class="mcurrent-{{ user.resource.player.id }}">{{ user.resource.megacredit }}</span>
+                    <input type="text" class="megacredit" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: chocolate">Posiadane żelazo:</span> <span class="icurrent-{{ user.resource.player.id }}">{{ user.resource.iron }}</span>
+                    <input type="text" class="iron" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: #aaaaaa">Posiadany tytan:</span> <span class="tcurrent-{{ user.resource.player.id }}">{{ user.resource.titan }}</span>
+                    <input type="text" class="titan" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: lawngreen">Posiadana roślinność:</span> <span class="pcurrent-{{ user.resource.player.id }}">{{ user.resource.plant }}</span>
+                    <input type="text" class="plant" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: mediumpurple">Posiadana energia:</span> <span class="ecurrent-{{ user.resource.player.id }}">{{ user.resource.energy }}</span>
+                    <input type="text" class="energy" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: coral">Posiadane ciepło:</span> <span class="hcurrent-{{ user.resource.player.id }}">{{ user.resource.heat }}</span>
+                    <input type="text" class="heat" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: #ffcc00">Produkcja megakredytów:</span> <span class="mpcurrent-{{ user.resource.player.id }}">{{ user.production.megacredit }}</span>
+                    <input type="text" class="megacreditprod" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: chocolate">Produkcja żelaza:</span> <span class="ipcurrent-{{ user.resource.player.id }}">{{ user.production.iron }}</span>
+                    <input type="text" class="ironprod" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: #aaaaaa">Produkcja tytanu:</span> <span class="tpcurrent-{{ user.resource.player.id }}">{{ user.production.titan }}</span>
+                    <input type="text" class="titanprod" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: lawngreen">Produkcja roślinności:</span> <span class="ppcurrent-{{ user.resource.player.id }}">{{ user.production.plant }}</span>
+                    <input type="text" class="plantprod" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: mediumpurple">Produkcja energii:</span> <span class="epcurrent-{{ user.resource.player.id }}">{{ user.production.energy }}</span>
+                    <input type="text" class="energyprod" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <span style="background-color: coral">Produkcja ciepła:</span> <span class="hpcurrent-{{ user.resource.player.id }}">{{ user.production.heat }}</span>
+                    <input type="text" class="heatprod" data-id="{{ user.resource.player.id }}">
+                </div>
+
+                <div>
+                    <input type="submit" value="Zapisz zmiany" data-id="{{ user.resource.player.id }}" class="save">
+                </div>
+
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}
+
+{% block java %}
+    <script>
+        $(document).ready(function() {
+            $(function () {
+                $("#tabs").tabs();
+            });
+
+
+            $('input.save').click(function () {
+                var id = $(this).attr('data-id');
+                var megacredit = $('input.megacredit[data-id="' + id + '"]').val();
+                var iron = $('input.iron[data-id="' + id + '"]').val();
+                var titan = $('input.titan[data-id="' + id + '"]').val();
+                var plant = $('input.plant[data-id="' + id + '"]').val();
+                var energy = $('input.energy[data-id="' + id + '"]').val();
+                var heat = $('input.heat[data-id="' + id + '"]').val();
+                var megacreditprod = $('input.megacreditprod[data-id="' + id + '"]').val();
+                var ironprod = $('input.ironprod[data-id="' + id + '"]').val();
+                var titanprod = $('input.titanprod[data-id="' + id + '"]').val();
+                var plantprod = $('input.plantprod[data-id="' + id + '"]').val();
+                var energyprod = $('input.energyprod[data-id="' + id + '"]').val();
+                var heatprod = $('input.heatprod[data-id="' + id + '"]').val();
+                $.ajax({
+                    url: "{{ path('admin_data') }}",
+                    cache: false,
+                    type: "post",
+                    dataType: 'json',
+                    data: {
+                        'id': id,
+                        'megacredit': megacredit,
+                        'iron': iron,
+                        'titan': titan,
+                        'plant': plant,
+                        'energy': energy,
+                        'heat': heat,
+                        'megacreditprod': megacreditprod,
+                        'ironprod': ironprod,
+                        'titanprod': titanprod,
+                        'plantprod': plantprod,
+                        'energyprod': energyprod,
+                        'heatprod': heatprod
+                    }
+                })
+                .done(function (response) {
+                    $('span.mcurrent-' + response.id).text(response.megacredit);
+                    $('span.icurrent-' + response.id).text(response.iron);
+                    $('span.tcurrent-' + response.id).text(response.titan);
+                    $('span.pcurrent-' + response.id).text(response.plant);
+                    $('span.ecurrent-' + response.id).text(response.energy);
+                    $('span.hcurrent-' + response.id).text(response.heat);
+                    $('span.mpcurrent-' + response.id).text(response.megacreditprod);
+                    $('span.ipcurrent-' + response.id).text(response.ironprod);
+                    $('span.tpcurrent-' + response.id).text(response.titanprod);
+                    $('span.ppcurrent-' + response.id).text(response.plantprod);
+                    $('span.epcurrent-' + response.id).text(response.energyprod);
+                    $('span.hpcurrent-' + response.id).text(response.heatprod);
+                })
+                .always(function() {
+                    var megacredit = $('input.megacredit[data-id="' + id + '"]').val("");
+                    var iron = $('input.iron[data-id="' + id + '"]').val("");
+                    var titan = $('input.titan[data-id="' + id + '"]').val("");
+                    var plant = $('input.plant[data-id="' + id + '"]').val("");
+                    var energy = $('input.energy[data-id="' + id + '"]').val("");
+                    var heat = $('input.heat[data-id="' + id + '"]').val("");
+                    var megacreditprod = $('input.megacreditprod[data-id="' + id + '"]').val("");
+                    var ironprod = $('input.ironprod[data-id="' + id + '"]').val("");
+                    var titanprod = $('input.titanprod[data-id="' + id + '"]').val("");
+                    var plantprod = $('input.plantprod[data-id="' + id + '"]').val("");
+                    var energyprod = $('input.energyprod[data-id="' + id + '"]').val("");
+                    var heatprod = $('input.heatprod[data-id="' + id + '"]').val("");
+                })
+            })
+        })
+    </script>
+{% endblock %}
