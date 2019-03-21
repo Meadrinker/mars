@@ -8,5 +8,8 @@
 
 class Service
 {
-
+    public function test2() {
+        $test = true;
+        $test2 = true;
+    }
 }
