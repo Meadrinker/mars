@@ -8,5 +8,7 @@
 
 class Service
 {
+    public function test() {
 
+    }
 }
