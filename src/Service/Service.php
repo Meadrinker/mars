@@ -6,7 +6,7 @@
  * Time: 15:42
  */
 
-class service
+class Service
 {
 
 }
